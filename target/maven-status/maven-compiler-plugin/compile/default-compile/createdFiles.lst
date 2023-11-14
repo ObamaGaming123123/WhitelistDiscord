@@ -1,1 +1,3 @@
-io\github\ObamaGaming123123\WhitlistDiscord\WhitelistDiscord.class
+io\github\ObamaGaming123123\WhitelistDiscord\DiscordBot\commands\commandManager.class
+io\github\ObamaGaming123123\WhitelistDiscord\DiscordBot\BotJDA.class
+io\github\ObamaGaming123123\WhitelistDiscord\WhitelistDiscord.class

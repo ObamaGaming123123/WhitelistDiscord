@@ -1,0 +1,13 @@
+name: WhitelistDiscord
+version: 1.20.1
+main: io.github.ObamaGaming123123.WhitelistDiscord.WhitelistDiscord
+api-version: 1.20
+
+libraries:
+  - "net.dv8tion:JDA:5.0.0-beta.17"
+
+#commands:
+#  GetNames:
+#    description: Gets all the minecraft names that are on discord
+#    usage: /<command>
+#    permission: WhitelistDiscord.GetNames
