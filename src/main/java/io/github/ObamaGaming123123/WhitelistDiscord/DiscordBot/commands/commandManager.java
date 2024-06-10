@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -19,10 +20,9 @@ import java.util.List;
  * **/
 
 public class commandManager extends ListenerAdapter {
-    private WhitelistDiscord plugin;
     //Initializing commandManager class
-    public commandManager(WhitelistDiscord plugin){
-        this.plugin = plugin;
+    public commandManager(){
+
     }
     //Gets the command and sends the username from discord to plugin listener
     @Override
@@ -33,12 +33,12 @@ public class commandManager extends ListenerAdapter {
             //Runs the command that will whitelist you on the server
             String username = event.getOption("username").getAsString();
             event.reply(String.format("Adding %s to server's whitelist", username)).queue();
-            plugin.addWhitelist(username);
+            WhitelistDiscord.getPlugin().addWhitelist(username);
         }
         else if(command.equalsIgnoreCase("command")){
             //Runs the command that will whitelist you on the server
             String username = event.getOption("command").getAsString();
-            plugin.addWhitelist(username);
+            WhitelistDiscord.getPlugin().addWhitelist(username);
         }
     }
 

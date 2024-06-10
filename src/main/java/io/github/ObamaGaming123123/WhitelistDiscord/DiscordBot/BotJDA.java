@@ -18,7 +18,7 @@ public class BotJDA{
     private final JDA JDAManager;
 
     //This is where the bot builder starts and sets up listeners
-    public BotJDA(String token, WhitelistDiscord plugin) throws LoginException {
+    public BotJDA(String token) throws LoginException {
         //if the token is incorrect it will spit out an error message
         try{
             JDABuilder builder = JDABuilder.createLight(token);
@@ -30,6 +30,6 @@ public class BotJDA{
         }
 
         //Registered Listeners
-        JDAManager.addEventListener(new commandManager(plugin));
+        JDAManager.addEventListener(new commandManager());
     }
 }
