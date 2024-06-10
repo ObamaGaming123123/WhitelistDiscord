@@ -8,6 +8,8 @@
     <p>Create a new application and go into it till you find BOT</p>
     <p>Create a new token and copy that, this is the token needed to be placed into the config.yml</p>
     <p>Lastly goto OAuth2 and generate URL under scopes check BOT followed by 'Send Messages' -> 'Use Slash Commands' ->L 'Read Message History'</p>
-    <p>Startup the server and your done!</p>
+    <p>copy the url and open it, invite it to the server you want</p>
+    <p>Startup the server and you're done!</p>
+    <p>use the slash command in discord "/whitelist [minecraft username]"</p>
   </div>
 </div>
