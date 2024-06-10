@@ -35,6 +35,11 @@ public class commandManager extends ListenerAdapter {
             event.reply(String.format("Adding %s to server's whitelist", username)).queue();
             plugin.addWhitelist(username);
         }
+        else if(command.equalsIgnoreCase("command")){
+            //Runs the command that will whitelist you on the server
+            String username = event.getOption("command").getAsString();
+            plugin.addWhitelist(username);
+        }
     }
 
     //Guild command, only has 100 uses, but there is only one command
@@ -42,7 +47,9 @@ public class commandManager extends ListenerAdapter {
     public void onGuildReady(@NotNull GuildReadyEvent event) {
         //Sets the message info and username description
         List<CommandData> commandData = new ArrayList<>();
+        commandData.add(Commands.slash("command", "Allows all commands").addOption(OptionType.STRING, "command", "The command you want to do"));
         commandData.add(Commands.slash("whitelist", "Whitelisting you username to the server").addOption(OptionType.STRING, "username", "Your Minecraft username"));
         event.getGuild().updateCommands().addCommands(commandData).queue();
+
     }
 }
