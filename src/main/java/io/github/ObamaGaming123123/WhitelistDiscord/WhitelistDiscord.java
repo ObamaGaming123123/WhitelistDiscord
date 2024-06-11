@@ -2,11 +2,13 @@ package io.github.ObamaGaming123123.WhitelistDiscord;
 
 
 import io.github.ObamaGaming123123.WhitelistDiscord.DiscordBot.BotJDA;
+import io.github.ObamaGaming123123.WhitelistDiscord.DiscordBot.commands.getWhiteListNames;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import javax.security.auth.login.LoginException;
+import java.util.List;
 
 
 /**
@@ -39,17 +41,30 @@ public class WhitelistDiscord extends JavaPlugin {
             getLogger().info("Discord Bot Token is incorrect!");
         }
 
-        //TODO: Make this command so it'll show all usernames added with discord bot
-        //this.getCommand("GetNames").setExecutor(new CommandGetNames());
+        this.getCommand("getwhitelisted").setExecutor(new getWhiteListNames(this));
+
         this.plugin = this;
         this.floodGate = config.getBoolean("floodgateInstalled");
 
     }
-    public void addWhitelist(String username){
-        //Getting uuid's and setting that whitelist to true
+    public void addWhitelist(String username) {
         getLogger().info(String.format("Added %s with uuid:%s to server", username, Bukkit.getOfflinePlayer(username)));
-        Bukkit.getScheduler().runTask(this, () -> Bukkit.getOfflinePlayer(username).setWhitelisted(true));
+        Bukkit.getScheduler().runTask(this, () -> {
+            Bukkit.getOfflinePlayer(username).setWhitelisted(true);
+            FileConfiguration config = this.getConfig();
+            List<String> discordWhitelistedPlayers = config.getStringList("DiscordWhitelistedPlayers");
+            if (!discordWhitelistedPlayers.contains(username)) {
+                discordWhitelistedPlayers.add(username);
+                config.set("DiscordWhitelistedPlayers", discordWhitelistedPlayers);
+                saveConfig();
+            }
+        });
     }
+
+    public List<String> getDiscordWhitelistedPlayers() {
+        return this.getConfig().getStringList("DiscordWhitelistedPlayers");
+    }
+
     public void addfWhitelist(String username){
         if(floodGate) {
             //Getting uuid's and setting that whitelist to true
