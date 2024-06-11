@@ -16,6 +16,7 @@ import javax.security.auth.login.LoginException;
 
 public class WhitelistDiscord extends JavaPlugin {
     private static WhitelistDiscord plugin;
+    private static boolean floodGate;
     /**
      * This function will be called during when the plugin is set to active/enable
      * **/
@@ -27,12 +28,13 @@ public class WhitelistDiscord extends JavaPlugin {
         //Configuration file to set the discord token
         FileConfiguration config = this.getConfig();
         config.addDefault("DiscordBotToken", "");
+        config.addDefault("floodgateInstalled", false);
         config.options().copyDefaults(true);
         saveConfig();
 
         //Starts the discord bot properties and starts all listeners
         try{
-            BotJDA bot = new BotJDA(config.getString("DiscordBotToken"));
+            BotJDA bot = new BotJDA(config.getString("DiscordBotToken"), config.getBoolean("floodgateInstalled"));
         }catch(LoginException e){
             getLogger().info("Discord Bot Token is incorrect!");
         }
@@ -40,12 +42,22 @@ public class WhitelistDiscord extends JavaPlugin {
         //TODO: Make this command so it'll show all usernames added with discord bot
         //this.getCommand("GetNames").setExecutor(new CommandGetNames());
         this.plugin = this;
+        this.floodGate = config.getBoolean("floodgateInstalled");
 
     }
     public void addWhitelist(String username){
         //Getting uuid's and setting that whitelist to true
         getLogger().info(String.format("Added %s with uuid:%s to server", username, Bukkit.getOfflinePlayer(username)));
         Bukkit.getScheduler().runTask(this, () -> Bukkit.getOfflinePlayer(username).setWhitelisted(true));
+    }
+    public void addfWhitelist(String username){
+        if(floodGate) {
+            //Getting uuid's and setting that whitelist to true
+            getLogger().info(String.format("Adding %s", username));
+            Bukkit.getScheduler().runTask(this, () -> getServer().dispatchCommand(getServer().getConsoleSender(), String.format("fwhitelist add %s", username)));
+        }else{
+            getLogger().info("Cannot invoke fWhitelist whilst config is set to false!");
+        }
     }
 
     public static WhitelistDiscord getPlugin(){

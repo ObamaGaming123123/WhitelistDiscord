@@ -1,7 +1,6 @@
 package io.github.ObamaGaming123123.WhitelistDiscord.DiscordBot;
 
 import io.github.ObamaGaming123123.WhitelistDiscord.DiscordBot.commands.commandManager;
-import io.github.ObamaGaming123123.WhitelistDiscord.WhitelistDiscord;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -18,7 +17,7 @@ public class BotJDA{
     private final JDA JDAManager;
 
     //This is where the bot builder starts and sets up listeners
-    public BotJDA(String token) throws LoginException {
+    public BotJDA(String token, boolean floodGate) throws LoginException {
         //if the token is incorrect it will spit out an error message
         try{
             JDABuilder builder = JDABuilder.createLight(token);
@@ -30,6 +29,6 @@ public class BotJDA{
         }
 
         //Registered Listeners
-        JDAManager.addEventListener(new commandManager());
+        JDAManager.addEventListener(new commandManager(floodGate));
     }
 }
